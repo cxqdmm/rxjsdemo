@@ -1,16 +1,7 @@
-import { Observable, Subject, ReplaySubject, from, of, range } from 'rxjs';
-import { map, filter, switchMap } from 'rxjs/operators';
-let stream$ = Observable.create((observe) => {
-    observe.next(1)
-    observe.next(2)
-    observe.next(3)
-    observe.next(4)
-    observe.complete()
-})
 
-stream$.subscribe( (value) => {
-   console.log('Value',value);
-},() => {},() => {console.log('wancheng')})
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './views/app'
+ReactDOM.render(<App></App>, document.getElementById('appRoot'))
 
  

@@ -3,6 +3,7 @@ const webpack = require('webpack')
 
 process.env.NODE_ENV = 'development'
 var config = {
+    context: path.resolve(__dirname),
     mode: 'development',
     devtool: 'source-map',
     entry: './src/index.js',
@@ -18,26 +19,36 @@ var config = {
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: false,
-        port: 9000,
+        port: 4009,
         inline:true,
         hot:true
     },
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /.(css|less)$/,
                 use: [
                     'style-loader',
                     'css-loader',
-                    'less-loader',
-                ]
+                    'less-loader?{"sourceMap":false,"javascriptEnabled": true}',
+                ],
+                include: [path.join(__dirname, "/src"),path.join(__dirname, '/node_modules/antd')]
             }, {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['babel-preset-env']
+                        plugins: [
+                            "transform-runtime", ['import', {
+
+                                libraryName: 'antd',
+        
+                                style: 'css'
+        
+                            }]
+                        ],
+                        presets: ['env','react']
                     }
                 }
             }
